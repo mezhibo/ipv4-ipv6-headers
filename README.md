@@ -60,4 +60,64 @@
 
 
 
+**Задание 2.**
 
+1) Запустите cmd.exe. Нажмите сочетание Win + r.
+
+2)В появившемся окне напишите "cmd".Нажмите "OK".
+
+3)Откроется командная строка.
+
+4) Выполните трассировку до сайта ya.ru. Команда для запуска трассировки tracert. Лучше запускать с ключами -w 1 -d. Справку по ключам можно получить, выполнив tracert --help.
+Сколько хопов в вашей трассировке?
+
+Какие значения TTL установлены в заголовке IPv4 пакета для каждого хопа?
+
+Какой тип icmp сообщения возвращался на каждом этапе трассировки?
+
+Какие src\dst адреса установлены в заголовке IPv4 для пакетов на каждом хопе, почему в исходном запросе и в ответе они отличаются?
+
+Заголовки пакетов проанализируйте в дампе Wireshark.
+
+Ответ приведите в виде скриншотов с дампа wireshark. Пояснения к дампу - в свободной форме.
+
+
+**Решение 2.**
+
+Запускаем трассировку, видим что в нашей трассировке 8 хопов
+
+![alt text](https://github.com/mezhibo/ipv4-ipv6-headers/blob/cd4ffdfa416bd71d1b675dc4bc8f532c2bdd8f6d/IMG/8.jpg)
+
+Видим что трассировка закончилась на 8 хопе
+
+![alt text](https://github.com/mezhibo/ipv4-ipv6-headers/blob/cd4ffdfa416bd71d1b675dc4bc8f532c2bdd8f6d/IMG/9.jpg)
+
+Видим что с каждым хопом количество TTL уменьашлось на 1, так как каждый хоп отрывал по 1 значению
+
+
+![alt text](https://github.com/mezhibo/ipv4-ipv6-headers/blob/57616e64ecc684a09e8e70373243c0aae489349d/IMG/10.jpg)
+
+![alt text](https://github.com/mezhibo/ipv4-ipv6-headers/blob/57616e64ecc684a09e8e70373243c0aae489349d/IMG/12.jpg)
+
+![alt text](https://github.com/mezhibo/ipv4-ipv6-headers/blob/57616e64ecc684a09e8e70373243c0aae489349d/IMG/13.jpg)
+
+
+С транзитных адресов возвращался ответ Type: 11 (Time-to-live exceeded) 
+
+![alt text](https://github.com/mezhibo/ipv4-ipv6-headers/blob/ff32f734be5f4abe9d78b80a5836c3b09311a147/IMG/14.jpg)
+
+
+А в последнем видим что вернулся ответ Type: 0 (Echo (ping) reply)
+
+![alt text](https://github.com/mezhibo/ipv4-ipv6-headers/blob/3bf497a7c78e0bc85a381ca46921f63427e73e49/IMG/15.jpg)
+
+
+
+В исходном запросе в заголовке присутствуют ip адреса хоста и источника, в ответах маршрутизаторы в src подставляют свой ip, в dst будет ip хоста - источника (инициатора запроса).
+
+
+![alt text](https://github.com/mezhibo/ipv4-ipv6-headers/blob/0198587413214cd123ff4cd52729914e5d509a1d/IMG/16.jpg)
+
+![alt text](https://github.com/mezhibo/ipv4-ipv6-headers/blob/0198587413214cd123ff4cd52729914e5d509a1d/IMG/17.jpg)
+
+![alt text](https://github.com/mezhibo/ipv4-ipv6-headers/blob/0198587413214cd123ff4cd52729914e5d509a1d/IMG/18.jpg)
